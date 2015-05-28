@@ -2,8 +2,8 @@ defmodule Passport.RegistrationManager do
   alias Ecto.Changeset
   import Passport.Model
 
-  def register(params) do
-    changeset = Changeset.cast(user_model.__struct__, params, ~w(email))
+  def register(params, optional_fields) do
+    changeset = Changeset.cast(user_model.__struct__, params, ~w(email), optional_fields)
     |> downcase_email
     |> set_hashed_password
     |> Changeset.validate_change(:email, &presence_validator/2)
